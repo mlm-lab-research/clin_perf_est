@@ -15,7 +15,6 @@ Code to reproduce results for the paper **“Label‑free estimation of clinical
 2. **Create and activate Python environment**
 
    ```bash
-   # Option A: Conda (exact versions pinned)
    conda env create -f environment.yml
    conda activate clinical-perf
 
