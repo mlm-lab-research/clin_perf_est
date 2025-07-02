@@ -36,7 +36,6 @@ repo/
 │   ├── artifact_array.npy         # Array keeping track of which test set indices are with the artifact
 │   ├── CBPE_metrics_dict.pkl      # File containing the CBPE estimated metrics.
 │   └── ...
-├── environment.yml       # conda env specification
 └── utils/
 │    ├── __init__.py
 │    ├── metrics.py
@@ -45,6 +44,12 @@ repo/
 │    └── utils.py
 └── environment.yml       # conda env specification
 ```
+
+
+---
+## Data disclaimer
+Model training and metrics calculation in the WILDS were performed separately, and the results are stored in the *results/* subfolder for each estimation technique.
+For the controlled shifts, the softmax outputs and labels from the classification model on Pleural Effusion on cheXpertPlus data, as well as the softmax outputs of the biased classifier, are also stored in the *results/* subfolder.
 
 
 ---
