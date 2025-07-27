@@ -60,10 +60,10 @@ def CBPE_auroc(outs, comet_logger=None, cfg=None, class_names=None, show_plots=T
     None
     """
     # Calculate estimated performance metrics
-    TPR_list = []
-    FPR_list = []
+    thresholds_ = np.quantile(outs, q=np.linspace(0, 1, 100))
+    thresholds = np.unique(thresholds_)
 
-    for t in np.linspace(0, 1, 100):
+    for t in thresholds:
         TP = []
         TN = []
         FP = []
@@ -265,7 +265,10 @@ def CM_DoC_metric_estim(val_outs, val_labels, test_outs, prevalence_correction=F
     labels    = np.asarray(val_labels, dtype=int).ravel()
     n_test    = test_arr.size
 
-    ts = np.linspace(0.001, 0.999, 101)
+    ts_ = np.linspace(0.001, 0.999, 100)
+    ts = np.quantile(test_outs, q=ts_)
+    ts = np.unique(ts)
+
     mask_val_pos  = val_arr[None, :]  >= ts[:, None]
     mask_test_pos = test_arr[None, :] >= ts[:, None]
 
@@ -561,7 +564,10 @@ def CM_ATC_metric_estim(val_outs, val_labels, test_outs, threshold=0.5, prevalen
     est_cov_mat = {'TP': TP_pred_test, 'TN': TN_pred_test, 'FP': FP_pred_test, 'FN': FN_pred_test}
     tpr = []
     fpr = []
-    for thresh in np.linspace(0.001, 0.999, 100):
+    thresholds_ = np.linspace(0.001, 0.999, 100)
+    thresholds = np.quantile(test_outs, q=thresholds_)
+    thresholds = np.unique(thresholds)
+    for thresh in thresholds:
         TP = np.sum(val_outs[val_labels == 1] >= thresh)
         TN = np.sum(val_outs[val_labels == 0] < thresh)
         FP = np.sum(val_outs[val_labels == 0] >= thresh)
